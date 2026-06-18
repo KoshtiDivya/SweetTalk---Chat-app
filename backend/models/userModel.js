@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
     password: { type: String, required: true },
     pic: {
         type: String,
-        default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+        default: "https://i.pinimg.com/736x/f7/82/c8/f782c8360e890a8d488eeda004b26bde.jpg"
     }
 }, {  timestamps: true});
 

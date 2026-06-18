@@ -13,6 +13,7 @@ connectDB();
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
 app.use(express.json()); // to accept json data
 
 app.get("/", (req, res) => {
@@ -36,7 +37,7 @@ const server = app.listen(PORT, () => {
 const io = require('socket.io')(server, {
     pingTimeOut : 60000,  //time for deactivate request here 60 sec
     cors: {
-        origin : "http://localhost:5173", //frontend
+        origin : "*", //frontend
     },
 })
 

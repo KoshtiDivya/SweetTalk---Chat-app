@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState, useContext } from "react";
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 
 const ChatContext = createContext();
@@ -57,6 +58,7 @@ const ChatProvider = (props) => {
         },
       };
       const { data } = await axios.get("/api/notification", config);
+      console.log("Notification API Data:", data);
       setNotification(data);
     } catch (error) {
       console.log(error);

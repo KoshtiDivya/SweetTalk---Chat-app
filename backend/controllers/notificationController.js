@@ -1,19 +1,40 @@
 const Notification = require("../models/notifiationModel");
 
 const getNotification = async (req, res) => {
-    try {
-        const notification = await Notification.find({
-            receiver: req.user._id,
-            isRead: false
-        }).populate("sender", "name");
+  try {
+    const notifications = await Notification.find({
+      receiver: req.user._id,
+      isRead: false,
+    })
+      .populate("sender", "name pic")
+      .populate({
+        path: "chat",
+        populate: {
+          path: "users",
+          select: "name pic email",
+        },
+      })
+      .populate("message")
+      .sort({ createdAt: -1 });
 
-        res.json(notification);
+    const uniqueNotifications = [];
+    const seenChats = new Set();
 
-    } catch (error) {
-        res.status(400);
-        throw new Error(error.message);
-    }
-}
+    notifications.forEach((n) => {
+      const chatId = n.chat?._id?.toString();
+
+      if (chatId && !seenChats.has(chatId)) {
+        seenChats.add(chatId);
+        uniqueNotifications.push(n);
+      }
+    });
+
+    res.json(uniqueNotifications);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+};
 
 const markChatNotificationsAsRead = async (req, res) => {
     try {

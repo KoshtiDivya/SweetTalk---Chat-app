@@ -54,6 +54,7 @@ const SideBar = () => {
   };
 
   const handleSearch = async () => {
+    console.log(search)
     if (!search) {
       toast({
         title: "Please Enter something in search",
@@ -118,16 +119,16 @@ const SideBar = () => {
      try {
        const config = {
          headers: {
-          Authorization : `Bearer ${user.token}`
+          Authorization : `Bearer ${user.token}`,
         }
        }
        
-       await axios.post(`/api/notification/read-chat/${notify.chat._id}`, config);
+       await axios.post(`/api/notification/read-chat/${notify.chat._id}`,{}, config);
        setSelectedChat(notify.chat);
 
-       setNotification((prev) => {
-         prev.filter((n) => n.chat._id !== notify.chat._id);
-       })
+       setNotification((prev) =>
+          prev.filter((n) => n.chat._id !== notify.chat._id)
+       );
      } catch (error) {
        console.log(error);
      }
@@ -173,14 +174,17 @@ const SideBar = () => {
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No New Messages..."}
-              {notification.map((notify) => (
+              
+              {/* {console.log("Notifications:", notification)} */}
+              {
+                notification.map((notify) => (
                 <MenuItem
                   key={notify._id}
                   onClick={() =>handleNotificationClick(notify)}
                 >
                   {notify.chat.isGroupChat
                     ? `New Message in ${notify.chat.chatName}`
-                    : `New Message from ${getSender(user, notify.chat.users)}`}
+                    : `New Message from ${getSender(user, notify?.chat?.users || [])}`}
                 </MenuItem>
               ))}
             </MenuList>
@@ -195,7 +199,7 @@ const SideBar = () => {
               />
             </MenuButton>
             <MenuList>
-              <ProfileModal user={user}>
+              <ProfileModal user={user} isOwnProfile={true}>
                 <MenuItem>My Profile</MenuItem>
               </ProfileModal>
               <MenuDivider />
