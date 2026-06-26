@@ -18,7 +18,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://sweettalk-chatapp.netlify.app/",
+      "https://sweettalk-chatapp.netlify.app",
     ],
     credentials: true,
   })
