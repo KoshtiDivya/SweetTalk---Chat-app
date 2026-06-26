@@ -63,7 +63,7 @@ const SideBar = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/user?search=${search}`, config);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -99,7 +99,7 @@ const SideBar = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post("/api/chat", { userId }, config);
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/chat`, { userId }, config);
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -125,7 +125,7 @@ const SideBar = () => {
         }
        }
        
-       await axios.post(`/api/notification/read-chat/${notify.chat._id}`,{}, config);
+       await axios.post(`${import.meta.env.VITE_API_URL}/api/notification/read-chat/${notify.chat._id}`,{}, config);
        setSelectedChat(notify.chat);
 
        setNotification((prev) =>

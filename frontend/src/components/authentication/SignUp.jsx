@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+    const API_URL = import.meta.env.VITE_API_URL;
     const [name, setName] = useState();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState();
@@ -91,7 +92,7 @@ const SignUp = () => {
                    "content-type": "application/json",
                },
            }  
-            const { data } = await axios.post("/api/user", { name, email, password, pic }, config);
+            const { data } = await axios.post( `${API_URL}/api/user`, { name, email, password, pic }, config);
             toast({
                 title: 'Registration Successful!',
                 status: 'success',

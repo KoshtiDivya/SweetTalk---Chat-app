@@ -69,7 +69,7 @@ const updateProfile = async () => {
     };
 
         const { data } = await axios.put(
-      "/api/user/profile",
+      `${import.meta.env.VITE_API_URL}/api/user/profile`,
       {
         name,
         pic,

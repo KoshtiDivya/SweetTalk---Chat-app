@@ -33,7 +33,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [newMessage, setNewMessage] = useState("");
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const ENDPOINT = "http://localhost:3000";
+  const ENDPOINT = import.meta.env.VITE_API_URL;
 
   const defaultOptions = {
     loop: true,
@@ -63,7 +63,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       };
       setLoading(true);
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `${import.meta.env.VITE_API_URL}/api/message/${selectedChat._id}`,
         config,
       );
       setMessages(data);
@@ -119,9 +119,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         setMessages([...messages, newMessageReceived]);
       }
     });
-    return () => {
-      socket.off("message received");
-    };
   });
 
   const sendMessage = async (event) => {
@@ -136,7 +133,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          `${import.meta.env.VITE_API_URL}/api/message`,
           {
             content: newMessage,
             chatId: selectedChat._id,

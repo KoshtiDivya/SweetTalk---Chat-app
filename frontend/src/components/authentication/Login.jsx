@@ -42,7 +42,7 @@ const Login = () => {
         },
       };
       const { data } = await axios.post(
-        "/api/user/login",
+        `${import.meta.env.VITE_API_URL}/api/user/login`,
         { email, password },
         config
       );

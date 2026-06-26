@@ -20,7 +20,7 @@ const MyChats = ({fetchAgain}) => {
         },
       };
 
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/chat`, config);
       setChats(data);
       // console.log(data);
     } catch (error) {
@@ -86,7 +86,8 @@ const MyChats = ({fetchAgain}) => {
       >
         {chats ? (
           <Stack overflowY="scroll">
-            {chats.map((chat) => (
+            {user &&
+              chats.map((chat) => (
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"

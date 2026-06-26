@@ -57,7 +57,7 @@ const ChatProvider = (props) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get("/api/notification", config);
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/notification`, config);
       console.log("Notification API Data:", data);
       setNotification(data);
     } catch (error) {

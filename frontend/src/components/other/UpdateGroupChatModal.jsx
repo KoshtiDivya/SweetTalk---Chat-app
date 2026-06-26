@@ -64,7 +64,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
            Authorization: `Bearer ${user.token}`
          },
        };
-       const { data } = await axios.put('/api/chat/group-add', {
+       const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/api/chat/group-add`, {
          chatId: selectedChat._id,
          userId: user1._id
        }, config);
@@ -73,7 +73,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
        setFetchAgain(!fetchAgain);
 
      } catch (error) {
-       console.log("ADD USER ERROR 👉", error.response?.data || error.message);
+       console.log("ADD USER ERROR ", error.response?.data || error.message);
 
   toast({
     title: "Error Occurred!",
@@ -107,7 +107,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
           Authorization: `Bearer ${user.token}`,
         },
       }
-        const { data } = await axios.put('/api/chat/group-remove', {
+        const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/api/chat/group-remove`, {
           userId: user1._id,
           chatId : selectedChat._id,
         }, config);
