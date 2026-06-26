@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require("dotenv");
+const cors = require("cors");
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const chatRoutes = require("./routes/chatRoutes");
@@ -13,6 +14,15 @@ connectDB();
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "",
+    ],
+    credentials: true,
+  })
+);
 
 app.use(express.json()); // to accept json data
 
@@ -45,6 +55,7 @@ io.on('connection', (socket) => {
     console.log("connected to socket.io");
 
     socket.on("setup", (userData) => {
+        socket.userId = userData._id;
         socket.join(userData._id);
         socket.emit("connected");
     })
