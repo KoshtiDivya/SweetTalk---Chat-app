@@ -53,19 +53,9 @@ const SideBar = () => {
     navigate("/");
   };
 
-  const handleSearch = async () => {
-    console.log(search)
-    if (!search) {
-      toast({
-        title: "Please Enter something in search",
-        variant: "subtle",
-        duration: 5000,
-        isClosable: true,
-        position: "top-left",
-      });
-      return;
-    }
-
+  const handleSearch = async (e) => {
+    // console.log(search)
+    setSearch(e.target.value);
     try {
       setLoading(true);
       const config = {
@@ -87,7 +77,19 @@ const SideBar = () => {
       });
     }
   };
-
+  const handleSearchBtn = async() => {
+    if (!search) {
+      toast({
+        title: "Please Enter something in search",
+        variant: "subtle",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      return;
+    }
+    handleSearch();
+  }
   const accessChat = async (userId) => {
     try {
       setLoadingChat(true);
@@ -219,9 +221,9 @@ const SideBar = () => {
                 placeholder="Search by name or email"
                 mr={2}
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => handleSearch(e)}
               />
-              <Button onClick={handleSearch}>Go</Button>
+              <Button onClick={handleSearchBtn}>Go</Button>
             </Box>
             {loading ? (
               <ChatLoading />
