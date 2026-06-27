@@ -115,7 +115,7 @@ useEffect(() => {
 
       <Modal size="lg" isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent bgGradient="linear(to-r, blue.300, purple.100)" h={"410px"}>
+        <ModalContent bgGradient="linear(to-r, blue.300, purple.100)" h={isEditing ? "500px" : "410px"} m={3}>
           <ModalHeader
             fontFamily="Work sans"
             fontSize="40px"
@@ -125,6 +125,7 @@ useEffect(() => {
           {isEditing && isOwnProfile ? (
                 <Input
                   value={name}
+                  mt={6}
                   onChange={(e) => setName(e.target.value)}
                 />
               ) : (
@@ -143,6 +144,7 @@ useEffect(() => {
             <Image
               borderRadius="full"
               boxSize="150px"
+              fit="cover"
               src={preview || pic}
               alt={user.name}
             />
@@ -150,6 +152,7 @@ useEffect(() => {
                   <Input
                     type="file"
                     accept="image/*"
+                    mt={1}
                     p={1.5}
                     onChange={handleImageChange}
                   />
